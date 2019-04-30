@@ -1,0 +1,23 @@
+{
+  "name": "babanana-chat-node",
+  "version": "1.0.0",
+  "description": "Websocket module",
+  "main": "BabananaChatNode.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eotones/BABANANA-Chat-Node.git"
+  },
+  "author": "Eotones",
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "node-fetch": "^2.4.1",
+    "socket.io-client": "^2.2.0",
+    "uuid": "^3.3.2"
+  },
+  "homepage": "https://github.com/Eotones/BABANANA-Chat-Node"
+}
