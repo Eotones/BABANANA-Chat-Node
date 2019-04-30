@@ -1,8 +1,13 @@
 # BABANANA-Chat-Node
 
+Kingkong unofficial websocket module
+
 * 純node.js版websocket module
 * 瀏覽器的`fetch()`沒有修改headers的權限,所以不能在瀏覽器運作
 * 只有訪客權限,所以只能讀訊息,不能發送訊息
+* BABANANA Chat 其他版本:
+    * 網頁版: https://banana.eotones.net/
+    * 桌面版: https://github.com/Eotones/BABANANA-Chat-Desktop (內嵌網頁版)
 
 ## 用法1(git clone)
 
