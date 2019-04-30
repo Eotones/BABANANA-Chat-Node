@@ -1,5 +1,7 @@
 # BABANANA-Chat-Node
-websocket module
+
+* 純node.js版websocket module
+* 瀏覽器的`fetch()`沒有修改headers的權限,所以不能在瀏覽器運作
 
 ## 用法1(git clone)
 
