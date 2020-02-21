@@ -58,7 +58,7 @@ kk_gift.start();
 
 //連線成功
 kk_gift.on('connect', () => {
-    console.log(`[chat/連線成功]`);
+    console.log(`[gift/連線成功]`);
 });
 
 //連線中斷
