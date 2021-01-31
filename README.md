@@ -34,7 +34,6 @@ index.js:
 ```javascript
 const BabananaChatNode = require('babanana-chat-node');
 
-//const chat_room_id = '2282757'; //館長
 const chat_room_id = '2132991'; //國動
 
 const kk_chat = new BabananaChatNode('chat', chat_room_id);

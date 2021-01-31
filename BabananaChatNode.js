@@ -8,6 +8,7 @@ class BabananaChatNode extends EventEmitter {
     constructor(type, chat_room_id){
         super();
         
+        /*
         this.socket_chat = io('wss://cht.ws.kingkong.com.tw/chat_nsp', {
             secure: true,
             transports: ['websocket'],
@@ -21,6 +22,49 @@ class BabananaChatNode extends EventEmitter {
             path: '/control_nsp',
             autoConnect: false
         });
+        */
+        
+        /*
+        this.socket_chat = io('https://cht.lv-show.com', {
+            secure: true,
+            transports: ['websocket'],
+            path: '/socket.io',
+            autoConnect: false,
+            extraHeaders: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+            }
+        });
+
+        this.socket_gift = io('https://ctl.lv-show.com', {
+            secure: true,
+            transports: ['websocket'],
+            path: '/socket.io',
+            autoConnect: false,
+            extraHeaders: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+            }
+        });
+        */
+        
+        this.socket_chat = io('wss://chat-web.lang.live/chat_nsp', {
+            secure: true,
+            transports: ['websocket'],
+            path: '/chat_nsp',
+            autoConnect: false,
+            extraHeaders: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+            }
+        });
+
+        this.socket_gift = io('wss://control-web.lang.live/control_nsp', {
+            secure: true,
+            transports: ['websocket'],
+            path: '/control_nsp',
+            autoConnect: false,
+            extraHeaders: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36'
+            }
+        });
 
         this.type = type;
         this.chat_room_id = chat_room_id;
@@ -32,13 +76,14 @@ class BabananaChatNode extends EventEmitter {
 
     _get_room_info(){
         fetch(
-            `https://api-kk.lv-play.com/webapi/v1/room/info?room_id=${this.chat_room_id}`,
+            `https://game-api.lang.live/webapi/v1/room/info?room_id=${this.chat_room_id}`,
             {
                 method: 'get', // GET, POST
                 headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 Safari/537.36',
                     'content-type': 'application/json',
-                    'Host': 'api-kk.lv-play.com',
-                    'Referer': `https://www.kingkong.com.tw/${this.chat_room_id}`
+                    'Host': 'game-api.lang.live',
+                    'Referer': `https://play.lang.live/${this.chat_room_id}`
                 },
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 mode: 'cors', // no-cors, cors, *same-origin
@@ -57,7 +102,8 @@ class BabananaChatNode extends EventEmitter {
                 tokens['live_id'] = json.data.live_info.live_id;
                 tokens['live_key'] = json.data.live_info.live_key;
                 tokens['token'] = this._create_kk_guest_token(tokens['live_id'],tokens['live_key']);
-    
+                
+                //console.log(tokens);
                 //console.log(tokens['token']);
                 
                 if(this.type == 'chat'){
@@ -127,8 +173,7 @@ class BabananaChatNode extends EventEmitter {
     }
 
     _webSocket_chat(tokens){
-        //開啟連線
-        this.socket_chat.open();
+        
 
         //連線成功
         this.socket_chat.on('connect', () => {
@@ -136,16 +181,21 @@ class BabananaChatNode extends EventEmitter {
             this.emit('connect');
 
             //傳送認證token
-            this.socket_chat.emit(
-                'authentication',
-                {
-                    "live_id": tokens['live_id'],
-                    "anchor_pfid": tokens['room_id'],
-                    "token": tokens['token'],
-                    "client_type": "web",
-                    "r": 0
-                }
-            );
+            setTimeout(() => {
+                console.log('傳送認證token');
+                this.socket_chat.emit(
+                    'authentication',
+                    {
+                        "live_id": tokens['live_id'],
+                        "anchor_pfid": tokens['room_id'],
+                        "access_token": tokens['token'],
+                        "token": tokens['token'],
+                        "from": "WEB",
+                        "client_type": "web",
+                        "r": 0
+                    }
+                );
+            }, 1500);
         });
 
         //連線中斷
@@ -180,6 +230,33 @@ class BabananaChatNode extends EventEmitter {
             //console.log(`[${data.name}] 加入`);
             this.emit('join', data);
         });
+
+        //error
+        this.socket_chat.on('error', (data) => {
+            //
+            console.log('error');
+            console.log(data);
+        });
+
+        //connect_error
+        this.socket_chat.on('connect_error', (data) => {
+            //
+            console.log('connect_error');
+            console.log(data);
+        });
+
+        //ping
+        this.socket_chat.on('ping', () => {
+            console.log('ping');
+        });
+
+        //pong
+        this.socket_chat.on('pong', () => {
+            console.log('pong');
+        });
+
+        //開啟連線
+        this.socket_chat.open();
     }
 
     _webSocket_gift(tokens){
@@ -197,7 +274,9 @@ class BabananaChatNode extends EventEmitter {
                 {
                     "live_id": tokens['live_id'],
                     "anchor_pfid": tokens['room_id'],
+                    "access_token": tokens['token'],
                     "token": tokens['token'],
+                    "from": "WEB",
                     "client_type": "web",
                     "r": 0
                 }
