@@ -185,6 +185,11 @@ const kk_gift = new BabananaChatNode('gift', chat_room_id);
 
 ## 版本說明
 
+### v2.0.1
+* [update] "socket.io-client" : "2.3.1" to "2.4.0"
+    * "socket.io-client"有更新版本的3.*和4.*,但是因為這兩個版本沒有向下相容server所以無法升上去
+* [update] "xmlhttprequest-ssl" : "1.5.5" to "1.6.2"
+
 ### v2.0.0
 * 新增開關台後自動切換房號重連功能
 * 取得禮物列表和圖片連結
