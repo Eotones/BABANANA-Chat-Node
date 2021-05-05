@@ -1,6 +1,6 @@
 {
   "name": "babanana-chat-node",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Websocket module",
   "main": "BabananaChatNode.js",
   "scripts": {
@@ -16,8 +16,9 @@
   "dependencies": {
     "crypto-js": "^3.3.0",
     "node-fetch": "^2.6.1",
-    "socket.io-client": "^2.3.1",
-    "uuid": "^3.4.0"
+    "socket.io-client": "2.4.0",
+    "uuid": "^3.4.0",
+    "xmlhttprequest-ssl": ">=1.6.2"
   },
   "homepage": "https://github.com/Eotones/BABANANA-Chat-Node"
 }

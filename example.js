@@ -1,7 +1,7 @@
 const BabananaChatNode = require('./BabananaChatNode.js');
 
-//const chat_room_id = '2132991'; //國動台2132991
-const chat_room_id = '7777777'; //
+const chat_room_id = '2132991'; //國動台2132991
+//const chat_room_id = '7777777'; //
 
 const kk_chat = new BabananaChatNode('chat', chat_room_id);
 const kk_gift = new BabananaChatNode('gift', chat_room_id);
@@ -54,7 +54,7 @@ const kk_gift = new BabananaChatNode('gift', chat_room_id);
         }
 
         //純文字無貼圖
-        console.log(`[chat/聊天訊息] ${role}${data.name}: ${data.msg}`);
+        //console.log(`[chat/聊天訊息] ${role}${data.name}: ${data.msg}`);
 
         //含html貼圖
         let msg_with_sticker = kk_chat.sticker_tag_to_img_html(data.msg, data.vip_fan); //貼圖tag轉html圖片
